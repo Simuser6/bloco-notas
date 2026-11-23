@@ -1,0 +1,46 @@
+<article class="card" [class]="'card color-' + note().color" [class.pinned]="note().pinned">
+  <a class="card__link" [routerLink]="['/notas', note().id, 'editar']">
+    <h3 class="card__title">{{ note().title || 'Sem título' }}</h3>
+    <p class="card__content">{{ note().content }}</p>
+  </a>
+
+  <footer class="card__footer">
+    <div class="card__meta">
+      <span class="chip">{{ categoryLabel() }}</span>
+      <time [attr.datetime]="note().updatedAt">{{
+        note().updatedAt | date: 'dd/MM/yyyy HH:mm'
+      }}</time>
+    </div>
+
+    <div class="card__actions">
+      @if (!note().archived) {
+        <button
+          type="button"
+          class="icon-btn"
+          [class.on]="note().pinned"
+          [attr.aria-pressed]="note().pinned"
+          [attr.aria-label]="note().pinned ? 'Desafixar nota' : 'Fixar nota'"
+          (click)="pinToggle.emit(note().id)"
+        >
+          <bn-icon name="pin" />
+        </button>
+      }
+      <button
+        type="button"
+        class="icon-btn"
+        [attr.aria-label]="note().archived ? 'Restaurar nota' : 'Arquivar nota'"
+        (click)="archiveToggle.emit(note().id)"
+      >
+        <bn-icon [name]="note().archived ? 'restore' : 'archive'" />
+      </button>
+      <button
+        type="button"
+        class="icon-btn danger"
+        aria-label="Excluir nota"
+        (click)="remove.emit(note().id)"
+      >
+        <bn-icon name="trash" />
+      </button>
+    </div>
+  </footer>
+</article>

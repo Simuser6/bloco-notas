@@ -1,0 +1,55 @@
+<div class="toolbar">
+  <div class="tabs" role="group" aria-label="Escopo das notas">
+    <button type="button" [attr.aria-pressed]="scope() === 'active'" (click)="scope.set('active')">
+      Notas <span class="count">{{ activeCount() }}</span>
+    </button>
+    <button
+      type="button"
+      [attr.aria-pressed]="scope() === 'archived'"
+      (click)="scope.set('archived')"
+    >
+      Arquivadas <span class="count">{{ archivedCount() }}</span>
+    </button>
+  </div>
+
+  <div class="search" role="search">
+    <bn-icon name="search" />
+    <label class="visually-hidden" for="busca">Buscar notas</label>
+    <input
+      id="busca"
+      type="search"
+      placeholder="Buscar por título ou conteúdo"
+      [value]="query()"
+      (input)="onQuery($event)"
+    />
+  </div>
+
+  <div class="field">
+    <label class="visually-hidden" for="filtro-categoria">Categoria</label>
+    <select id="filtro-categoria" [value]="category()" (change)="onCategory($event)">
+      <option value="all">Todas as categorias</option>
+      @for (c of categories; track c.value) {
+        <option [value]="c.value" [selected]="category() === c.value">{{ c.label }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="views" role="group" aria-label="Modo de visualização">
+    <button
+      type="button"
+      aria-label="Visualizar em grade"
+      [attr.aria-pressed]="viewMode() === 'grid'"
+      (click)="viewMode.set('grid')"
+    >
+      <bn-icon name="grid" />
+    </button>
+    <button
+      type="button"
+      aria-label="Visualizar em lista"
+      [attr.aria-pressed]="viewMode() === 'list'"
+      (click)="viewMode.set('list')"
+    >
+      <bn-icon name="list" />
+    </button>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <div class="field">
+    <label for="titulo">Título</label>
+    <input
+      id="titulo"
+      type="text"
+      formControlName="title"
+      [maxlength]="limits.title"
+      [attr.aria-invalid]="showError('title')"
+      aria-describedby="erro-titulo"
+    />
+    @if (showError('title')) {
+      <p id="erro-titulo" class="error" role="alert">Informe um título.</p>
+    }
+  </div>
+
+  <div class="field">
+    <label for="conteudo">Conteúdo</label>
+    <textarea
+      id="conteudo"
+      rows="10"
+      formControlName="content"
+      [maxlength]="limits.content"
+      [attr.aria-invalid]="showError('content')"
+      aria-describedby="erro-conteudo"
+    ></textarea>
+    @if (showError('content')) {
+      <p id="erro-conteudo" class="error" role="alert">Escreva o conteúdo da nota.</p>
+    }
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label for="categoria">Categoria</label>
+      <select id="categoria" formControlName="category">
+        @for (c of categories; track c.value) {
+          <option [value]="c.value">{{ c.label }}</option>
+        }
+      </select>
+    </div>
+
+    <fieldset class="field colors">
+      <legend>Cor</legend>
+      <div class="swatches">
+        @for (c of colors; track c.value) {
+          <label class="swatch" [class]="'swatch color-' + c.value">
+            <input type="radio" formControlName="color" [value]="c.value" />
+            <span class="visually-hidden">{{ c.label }}</span>
+          </label>
+        }
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="btn" (click)="cancelled.emit()">Cancelar</button>
+    <button type="submit" class="btn btn--primary">Salvar nota</button>
+  </div>
+</form>

@@ -1,0 +1,113 @@
+:host {
+  display: block;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--note-default);
+  color: var(--note-ink);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+  &.pinned {
+    border-color: var(--color-accent);
+  }
+
+  &.color-yellow {
+    background: var(--note-yellow);
+  }
+  &.color-blue {
+    background: var(--note-blue);
+  }
+  &.color-green {
+    background: var(--note-green);
+  }
+  &.color-pink {
+    background: var(--note-pink);
+  }
+  &.color-purple {
+    background: var(--note-purple);
+  }
+}
+
+.card__link {
+  flex: 1;
+  display: block;
+  padding: var(--space-4);
+  text-decoration: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.card__title {
+  font-size: 1.05rem;
+  margin-bottom: var(--space-2);
+  overflow-wrap: anywhere;
+}
+
+.card__content {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  opacity: 0.85;
+}
+
+.card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3) var(--space-3);
+}
+
+.card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.chip {
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  font-weight: 600;
+}
+
+.card__actions {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+
+  &:hover {
+    background: color-mix(in srgb, currentColor 14%, transparent);
+  }
+  &.on {
+    color: var(--color-accent);
+  }
+  &.danger:hover {
+    color: var(--color-danger);
+  }
+}

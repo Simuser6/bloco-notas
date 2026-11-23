@@ -1,0 +1,60 @@
+<section class="page-head">
+  <h1>Minhas notas</h1>
+  <a class="btn btn--primary" routerLink="/notas/nova"> <bn-icon name="plus" /> Nova nota </a>
+</section>
+
+<bn-notes-toolbar
+  [(query)]="store.query"
+  [(category)]="store.category"
+  [(scope)]="store.scope"
+  [viewMode]="store.viewMode()"
+  (viewModeChange)="store.setViewMode($event)"
+  [activeCount]="store.activeCount()"
+  [archivedCount]="store.archivedCount()"
+/>
+
+<p class="visually-hidden" aria-live="polite">
+  {{ store.filteredNotes().length }} nota(s) encontrada(s)
+</p>
+
+@if (store.filteredNotes().length === 0) {
+  <div class="empty">
+    @if (store.hasActiveFilters()) {
+      <p>Nenhuma nota corresponde à busca ou ao filtro.</p>
+      <button type="button" class="btn" (click)="store.clearFilters()">Limpar filtros</button>
+    } @else if (store.scope() === 'archived') {
+      <p>Nenhuma nota arquivada.</p>
+    } @else {
+      <p>Você ainda não tem notas. Que tal criar a primeira?</p>
+      <a class="btn btn--primary" routerLink="/notas/nova">Criar nota</a>
+    }
+  </div>
+} @else {
+  @if (store.pinnedNotes().length > 0) {
+    <section class="group" aria-labelledby="titulo-fixadas">
+      <h2 id="titulo-fixadas" class="group__title">Fixadas</h2>
+      <bn-note-list
+        [notes]="store.pinnedNotes()"
+        [viewMode]="store.viewMode()"
+        (pinToggle)="store.togglePinned($event)"
+        (archiveToggle)="store.toggleArchived($event)"
+        (remove)="remove($event)"
+      />
+    </section>
+  }
+
+  @if (store.otherNotes().length > 0) {
+    <section class="group" aria-labelledby="titulo-outras">
+      @if (store.pinnedNotes().length > 0) {
+        <h2 id="titulo-outras" class="group__title">Outras</h2>
+      }
+      <bn-note-list
+        [notes]="store.otherNotes()"
+        [viewMode]="store.viewMode()"
+        (pinToggle)="store.togglePinned($event)"
+        (archiveToggle)="store.toggleArchived($event)"
+        (remove)="remove($event)"
+      />
+    </section>
+  }
+}

@@ -1,0 +1,9 @@
+<a class="back" routerLink="/notas"><bn-icon name="back" /> Voltar</a>
+
+@if (notFound()) {
+  <h1>Nota não encontrada</h1>
+  <p class="muted">Ela pode ter sido excluída.</p>
+} @else {
+  <h1>{{ isEditing() ? 'Editar nota' : 'Nova nota' }}</h1>
+  <bn-note-form [initial]="note()" (saved)="save($event)" (cancelled)="goBack()" />
+}
